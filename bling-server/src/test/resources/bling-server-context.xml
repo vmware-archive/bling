@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:gfe="http://www.springframework.org/schema/gemfire"
+       xmlns:gfe-data="http://www.springframework.org/schema/data/gemfire"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+		http://www.springframework.org/schema/data/gemfire http://www.springframework.org/schema/data/gemfire/spring-data-gemfire.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
+		http://www.springframework.org/schema/gemfire http://www.springframework.org/schema/gemfire/spring-gemfire.xsd">
+
+    <context:annotation-config/>
+    <context:component-scan base-package="io.pivotal.bling"/>
+
+    <util:properties id="peerCacheConfigurationSettings">
+        <prop key="name">springGemFirePeerCache</prop>
+        <prop key="locators">localhost[11235]</prop>
+        <prop key="log-level">config</prop>
+        <prop key="mcast-port">0</prop>
+        <prop key="start-locator">localhost[11235]</prop>
+    </util:properties>
+
+    <bean id="pdxSerializer" class="com.gemstone.gemfire.pdx.ReflectionBasedAutoSerializer">
+        <constructor-arg value="io.pivotal.bling.core.model.*"/>
+    </bean>
+
+    <gfe:cache pdx-read-serialized="true" properties-ref="peerCacheConfigurationSettings" pdx-serializer-ref="pdxSerializer"/>
+
+    <gfe:cache id="gemfireCache" >
+    </gfe:cache>
+
+    <gfe:cache-server auto-startup="true" cache-ref="gemfireCache"/>
+
+    <bean id="locationEventListener" class="io.pivotal.bling.server.listeners.AsyncLocationEventListener"/>
+
+
+    <gfe:partitioned-region id="Beacon" cache-ref="gemfireCache" name="Beacon">
+    </gfe:partitioned-region>
+
+    <gfe:partitioned-region id="Device" cache-ref="gemfireCache" name="Device">
+    </gfe:partitioned-region>
+    
+    <gfe:partitioned-region id="Event" cache-ref="gemfireCache" name="Event">
+        <gfe:async-event-queue>
+            <gfe:async-event-listener ref="locationEventListener"/>
+        </gfe:async-event-queue>
+    </gfe:partitioned-region>
+
+    <gfe:partitioned-region id="Facility" cache-ref="gemfireCache" name="Facility">
+    </gfe:partitioned-region>
+    
+    <gfe:partitioned-region id="Fence" cache-ref="gemfireCache" name="Fence">
+    </gfe:partitioned-region>
+    
+    <!-- this region stores locations of various types -->
+    <gfe:partitioned-region id="Location" cache-ref="gemfireCache" name="Location">
+    </gfe:partitioned-region>
+    
+    <gfe:partitioned-region id="Path" cache-ref="gemfireCache" name="Path">
+    </gfe:partitioned-region>
+
+    <gfe-data:function-executions base-package="io.pivotal.bling.server.functions"/>
+    <gfe:annotation-driven/>
+    <gfe-data:repositories base-package="io.pivotal.bling.core.repositories"/>
+
+</beans>

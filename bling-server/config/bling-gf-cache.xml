@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<!DOCTYPE cache PUBLIC
+        "-//GemStone Systems, Inc.//GemFire Declarative Caching 8.0//EN"
+        "http://www.gemstone.com/dtd/cache8_0.dtd">
+<cache>
+    <pdx>
+        <pdx-serializer>
+            <class-name>
+                com.gemstone.gemfire.pdx.ReflectionBasedAutoSerializer
+            </class-name>
+            <parameter name="classes">
+                <string>io.pivotal.bling.core.model.*</string>
+            </parameter>
+        </pdx-serializer>
+    </pdx>
+    <initializer>
+        <class-name>org.springframework.data.gemfire.support.SpringContextBootstrappingInitializer</class-name>
+        <parameter name="contextConfigLocations">
+            <string>
+                classpath:bling-spring-cache.xml
+            </string>
+        </parameter>
+    </initializer>
+</cache>
