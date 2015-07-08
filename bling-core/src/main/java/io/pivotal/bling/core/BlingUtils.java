@@ -1,8 +1,11 @@
 package io.pivotal.bling.core;
 
+import io.pivotal.bling.core.model.Location;
+
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.UUID;
 
 /**
  * @author sgupta
@@ -16,6 +19,9 @@ public final class BlingUtils {
   private static final long SCALE = 1000L;
   private static final long LAT_MAX = 180L * SCALE;
   private static final long LON_MAX = 360L * SCALE;
+
+  public static final Double EARTH_RADIUS_METERS = 6378000D;
+
 
   public static Long calculateBucket(Double lat, Double lon) {
     lat += 90.0D;
@@ -76,5 +82,21 @@ public final class BlingUtils {
       chars[i] = ID_CHARS[RANDOM.nextInt(ID_CHARS.length)];
     }
     return Long.toString(System.currentTimeMillis(), 36) + new String(chars);
+  }
+
+  public static String createUUID() {
+    return UUID.randomUUID().toString();
+  }
+
+  /**
+   * give the distance between two locations in meters
+   * @param p1
+   * @param p2
+   * @return
+   */
+  public Double distance(Location p1, Location p2) {
+    Double p1LatRadians = p1.getLatitude() * Math.PI / 180.0D;
+    Double p1LonRadians = p1.getLongitude() * Math.PI / 180.0D;
+    return null;
   }
 }

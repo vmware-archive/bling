@@ -34,4 +34,18 @@ public class TestLocations {
   public static final Location TimesSquare_20Block = new Location(null, null, null, 40.747759, -74.004195, null, System.currentTimeMillis());
   public static final Location TimesSquare_25Block = new Location(null, null, null, 40.733306, -73.987179, null, System.currentTimeMillis());
   public static final Location TimesSquare_40Block = new Location(null, null, null, 40.788306, -73.976407, null, System.currentTimeMillis());
+
+  public static final Location MacysNYC_MensDept = new Location(null, null, null, 40.750712, -73.988587, null, System.currentTimeMillis());
+  public static final Location MacysNYC_KidsDept = new Location(null, null, null, 40.750709, -73.988581, null, System.currentTimeMillis());
+  public static final Location MacysNYC_WomensDept = new Location(null, null, null, 40.750715, -73.988589, null, System.currentTimeMillis());
+  public static final Location MacysNYC_HouseDept = new Location(null, null, null, 40.750716, -73.988578, null, System.currentTimeMillis());
+
+  public static final Location[] BEACON_LOCATIONS = new Location[]{
+      MacysNYC_HouseDept,
+      MacysNYC_KidsDept,
+      MacysNYC_MensDept,
+      MacysNYC_WomensDept,
+  };
+
+  public static final String TEST_UUID = "99707B13-94FF-480F-8A22-48BD67018F5E";
 }

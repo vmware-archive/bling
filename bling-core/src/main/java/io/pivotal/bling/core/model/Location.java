@@ -75,6 +75,10 @@ public class Location implements Serializable {
     return timestamp;
   }
 
+  public Point getPoint() {
+    return new Point(latitude, longitude);
+  }
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {

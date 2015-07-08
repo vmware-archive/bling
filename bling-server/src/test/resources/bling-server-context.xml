@@ -36,6 +36,9 @@
     <bean id="locationEventListener" class="io.pivotal.bling.server.listeners.AsyncLocationEventListener"/>
 
 
+    <gfe:partitioned-region id="App" cache-ref="gemfireCache" name="App">
+    </gfe:partitioned-region>
+
     <gfe:partitioned-region id="Beacon" cache-ref="gemfireCache" name="Beacon">
     </gfe:partitioned-region>
 

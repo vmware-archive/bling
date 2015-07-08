@@ -1,5 +1,6 @@
 package io.pivotal.bling.server;
 
+import io.pivotal.bling.server.tests.controller.BeaconControllerTest;
 import io.pivotal.bling.server.tests.controller.DevicesControllerTest;
 import io.pivotal.bling.server.tests.integration.LocationEventsTest;
 import org.junit.Test;
@@ -20,6 +21,9 @@ public class BlingServerApplicationTests {
   @Autowired
   LocationEventsTest locationEventsTest;
 
+  @Autowired
+  BeaconControllerTest beaconControllerTest;
+
 	@Test
 	public void contextLoads() {
 	}
@@ -33,6 +37,11 @@ public class BlingServerApplicationTests {
   @Test
   public void runLocationsEventTest() {
     locationEventsTest.runTests();
+  }
+
+  @Test
+  public void runBeaconsControllerTest() {
+    beaconControllerTest.testCreateBeacon();
   }
 
 }

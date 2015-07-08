@@ -65,17 +65,21 @@ public class GeoController {
 
 
   /**
-   * given a [lat, lon]
+   * given a [lat, lon] by a device, find the things nearby
    * @param lat
    * @param lon
    * @param radius
    */
   @RequestMapping(value = "near", method = RequestMethod.GET)
   @ResponseBody
-  public ResponseEntity<GeoNearResponse> findNearby(@RequestParam(value = "lat", required = true) Double lat,
+  public ResponseEntity<GeoNearResponse> findNearby(@RequestParam(value = "deviceId", required = true) String deviceId,
+                                                    @RequestParam(value = "lat", required = true) Double lat,
                                                     @RequestParam(value = "lon", required = true) Double lon,
                                                     @RequestParam(value = "radius", required = false, defaultValue = "MEDIUM") Radius radius,
                                                     @RequestParam(value = "limit", required = false, defaultValue = "100") Integer limit) {
+    if(!deviceRepository.exists(deviceId)) {
+      return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
     Long[] buckets = BlingUtils.getSurroundingBuckets(lat, lon, radius);
     List<Facility> facilities = new LinkedList<>();
     for (Long bucket : buckets) {

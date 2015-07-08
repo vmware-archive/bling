@@ -15,12 +15,37 @@ public class Fence implements Serializable {
 
   @Id
   private final String id;
+  private final Location location;
+  private final Long lastUpdateTimestamp;
+  /**
+   * radius of the fence in
+   */
+  private final Double radius;
 
-  public Fence(String id) {
+  public Fence(String id, Location location, Long lastUpdateTimestamp, Double radius) {
     this.id = id;
+    this.location = location;
+    this.lastUpdateTimestamp = lastUpdateTimestamp;
+    this.radius = radius;
   }
 
   public String getId() {
     return id;
+  }
+
+  public Location getLocation() {
+    return location;
+  }
+
+  public Long getLastUpdateTimestamp() {
+    return lastUpdateTimestamp;
+  }
+
+  public Double getRadius() {
+    return radius;
+  }
+
+  public boolean locationIsInFence(Point point) {
+    return false;
   }
 }

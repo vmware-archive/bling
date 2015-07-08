@@ -16,11 +16,51 @@ public class Path implements Serializable {
   @Id
   private final String id;
 
-  public Path(String id) {
+  private final Point[] points;
+
+  /**
+   * width of the path, in meters
+   */
+  private final Long width;
+
+  public Path(String id, Point[] points, Long width) {
     this.id = id;
+    this.points = points;
+    this.width = width;
   }
 
   public String getId() {
     return id;
+  }
+
+  public Point[] getPoints() {
+    return points;
+  }
+
+  public Long getWidth() {
+    return width;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Path path = (Path) o;
+
+    if (!id.equals(path.id)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return id.hashCode();
   }
 }

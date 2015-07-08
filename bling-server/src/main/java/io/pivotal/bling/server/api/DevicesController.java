@@ -3,6 +3,7 @@ package io.pivotal.bling.server.api;
 import io.pivotal.bling.core.BlingUtils;
 import io.pivotal.bling.core.model.Device;
 import io.pivotal.bling.core.repositories.DeviceRepository;
+import io.pivotal.bling.core.repositories.LocationRepository;
 import io.pivotal.bling.server.api.msg.DeviceCreateUpdateRequest;
 import io.pivotal.bling.server.api.msg.GenericCreateUpdateResponse;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,12 +26,18 @@ public class DevicesController {
   @Autowired
   DeviceRepository deviceRepository;
 
+  @Autowired
+  LocationRepository locationRepository;
+
   @RequestMapping(value = "/createUpdate", method = RequestMethod.POST)
   @ResponseBody
   public ResponseEntity<GenericCreateUpdateResponse> createUpdateDevice(DeviceCreateUpdateRequest request) {
+    //todo: this is not currently checking for app id being valid
     Device device = request.getDevice();
     if(device.getId() == null) {
-      device = new Device(BlingUtils.createTimeBasedUid(), device.getDeviceType(), device.getMetadata());
+      device = new Device(BlingUtils.createTimeBasedUid(),
+                          device.getAppId(), device.getDeviceType(),
+                          null, null, null, device.getMetadata());
     }
 
     deviceRepository.save(device);

@@ -14,22 +14,51 @@ import java.util.Map;
 public class Beacon implements Serializable {
   private static final long serialVersionUID = -4117844420009027804L;
 
+  /**
+   * the id of the facility that owns this beacon
+   */
   private final String parentId;
+
   @Id
   private final String id;
   private final Location location;
+  private final String uuid;
   private final Long major;
   private final Long minor;
   private final Map<String,String> metadata;
 
 
-  public Beacon(String parentId, String id, Location location, Long major, Long minor, Map<String, String> metadata) {
+  public Beacon(String parentId, Location location, String uuid, Long major, Long minor, Map<String, String> metadata) {
     this.parentId = parentId;
-    this.id = id;
+    this.id = uuid+"/"+major+"/"+minor;
     this.location = location;
+    this.uuid = uuid;
     this.major = major;
     this.minor = minor;
     this.metadata = metadata;
+  }
+
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) {
+      return true;
+    }
+    if (o == null || getClass() != o.getClass()) {
+      return false;
+    }
+
+    Beacon beacon = (Beacon) o;
+
+    if (!id.equals(beacon.id)) {
+      return false;
+    }
+
+    return true;
+  }
+
+  @Override
+  public int hashCode() {
+    return id.hashCode();
   }
 
   public String getParentId() {
@@ -42,6 +71,10 @@ public class Beacon implements Serializable {
 
   public Location getLocation() {
     return location;
+  }
+
+  public String getUuid() {
+    return uuid;
   }
 
   public Long getMajor() {
