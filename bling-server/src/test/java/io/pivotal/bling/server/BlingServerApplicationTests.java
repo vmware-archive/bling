@@ -1,5 +1,9 @@
 package io.pivotal.bling.server;
 
+import com.gemstone.gemfire.cache.query.FunctionDomainException;
+import com.gemstone.gemfire.cache.query.NameResolutionException;
+import com.gemstone.gemfire.cache.query.QueryInvocationTargetException;
+import com.gemstone.gemfire.cache.query.TypeMismatchException;
 import io.pivotal.bling.server.tests.controller.BeaconControllerTest;
 import io.pivotal.bling.server.tests.controller.DevicesControllerTest;
 import io.pivotal.bling.server.tests.integration.LocationEventsTest;
@@ -35,7 +39,7 @@ public class BlingServerApplicationTests {
   }
 
   @Test
-  public void runLocationsEventTest() {
+  public void runLocationsEventTest() throws NameResolutionException, TypeMismatchException, QueryInvocationTargetException, FunctionDomainException {
     locationEventsTest.runTests();
   }
 

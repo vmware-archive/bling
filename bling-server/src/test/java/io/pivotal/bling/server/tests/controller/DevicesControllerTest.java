@@ -21,7 +21,7 @@ public class DevicesControllerTest {
   DevicesController devicesController;
 
   public void runTests() {
-    devicesController.createUpdateDevice(new DeviceCreateUpdateRequest(new Device("123", "App123", "ios", uuid, major, minor, null)));
+    devicesController.createUpdateDevice(new DeviceCreateUpdateRequest(new Device("123", "App123", "ios", "uuid", 123L, 123L, null)));
   }
 
 }

@@ -20,18 +20,19 @@ public class LocationQuery {
   ClientCache clientCache;
 
   public List<Location> findLocationsInBuckets(List<Long> buckets) throws NameResolutionException, TypeMismatchException, QueryInvocationTargetException, FunctionDomainException {
-    StringBuilder queryStringBuilder = new StringBuilder("SELECT t FROM /Location t WHERE t.bucket IN ");
+    StringBuilder queryStringBuilder = new StringBuilder("SELECT t FROM /Location t WHERE t.bucket IN (");
     boolean isFirst = true;
     for (Long bucket : buckets) {
       if(!isFirst) {
         queryStringBuilder.append(' ');
       }
-      queryStringBuilder.append("\"").append(bucket).append("");
+      queryStringBuilder.append("'").append(bucket).append("'");
       if(isFirst) {
         isFirst = false;
       }
     }
-//    queryStringBuilder.append("'");
+    queryStringBuilder.append(")");
+    System.out.println("--->>> queryStringBuilder.toString() = " + queryStringBuilder.toString());
     Query query = clientCache.getQueryService().newQuery(queryStringBuilder.toString());
     SelectResults<?> locations = (SelectResults<?>) query.execute();
     List<Location> locationList =
