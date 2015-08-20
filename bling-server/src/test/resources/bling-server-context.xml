@@ -16,10 +16,10 @@
 
     <util:properties id="peerCacheConfigurationSettings">
         <prop key="name">springGemFirePeerCache</prop>
-        <prop key="locators">localhost[11235]</prop>
+        <!--<prop key="locators">localhost[11235]</prop>-->
         <prop key="log-level">config</prop>
         <prop key="mcast-port">0</prop>
-        <prop key="start-locator">localhost[11235]</prop>
+        <!--<prop key="start-locator">localhost[11235]</prop>-->
     </util:properties>
 
     <bean id="pdxSerializer" class="com.gemstone.gemfire.pdx.ReflectionBasedAutoSerializer">
